@@ -1,4 +1,4 @@
-package com.example.demo.spring;
+package spring;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package com.example.demo.nio;
+package nio;
 
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -15,7 +15,7 @@ public class ChannelTest {
     public static void main(String[] args) {
         RandomAccessFile aFile = null;
         try {
-            aFile = new RandomAccessFile("src\\main\\resources\\nio-data.txt", "rw");
+            aFile = new RandomAccessFile("NioTest/src/main/resources/nio-data.txt", "rw");
             FileChannel inChannel = aFile.getChannel();
             //create buffer with capacity of 48 bytes
             ByteBuffer buf = ByteBuffer.allocate(48);

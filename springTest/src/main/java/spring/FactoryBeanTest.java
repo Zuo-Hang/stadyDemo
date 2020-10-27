@@ -1,4 +1,4 @@
-package com.example.demo.spring;
+package spring;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,12 +7,11 @@ package com.example.demo.spring;
  * @Date: 2020/10/27/17:48
  * @Description:
  */
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class FactoryBeanTest {
     public static void main(String[] args){
-        String url = "src/main/resources/Bean.xml";
+        String url = "springTest/src/main/resources/Bean.xml";
         FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext(url);
         //ClassPathXmlApplicationContext cpxa = new ClassPathXmlApplicationContext(url);
         Object school=  context.getBean("factoryBeanPojo");

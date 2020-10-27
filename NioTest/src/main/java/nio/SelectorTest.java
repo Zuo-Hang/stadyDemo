@@ -1,4 +1,4 @@
-package com.example.demo.nio;
+package nio;
 
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
