@@ -1,4 +1,4 @@
-package com.example.demo.nettyTest;
+package nettyTest;
 
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -9,7 +9,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
@@ -31,25 +30,27 @@ public class NettyServer {
     }
 
     public void start(String host, int port) throws Exception {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        EventLoopGroup bossGroup = new NioEventLoopGroup(0, executorService);//Boss I/O线程池,用于处理客户端连接,连接建立之后交给work I/O处理
-        EventLoopGroup workerGroup = new NioEventLoopGroup(0, executorService);//Work I/O线程池
-        EventExecutorGroup businessGroup = new DefaultEventExecutorGroup(2);//业务线程池
-        ServerBootstrap server = new ServerBootstrap();//启动类
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        //Boss I/O线程池,用于处理客户端连接,连接建立之后交给work I/O处理
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        //Work I/O线程池
+        ServerBootstrap server = new ServerBootstrap();
+        //启动类
         server.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024).childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline pipeline = ch.pipeline();
                 pipeline.addLast("idleStateHandler", new IdleStateHandler(0, 0, 3));
-               // pipeline.addLast(businessGroup, new ServerHandler());
+                pipeline.addLast( new ServerHandler());
             }
         });
         server.childOption(ChannelOption.TCP_NODELAY, true);
         server.childOption(ChannelOption.SO_RCVBUF, 32 * 1024);
         server.childOption(ChannelOption.SO_SNDBUF, 32 * 1024);
         InetSocketAddress addr = new InetSocketAddress(host, port);
-        server.bind(addr).sync().channel();//重启服务
+        server.bind(addr).sync().channel();
+        //重启服务
 
     }
 }
