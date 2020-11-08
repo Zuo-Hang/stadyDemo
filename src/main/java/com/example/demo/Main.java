@@ -42,6 +42,7 @@ public class Main {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 
+
 //        Functiondemo functiondemo=new Functiondemo();
 //        Iface iface = Mapmap.map.get(2);
 //        Optional.ofNullable(iface).ifPresent(i->System.out.println(i));
